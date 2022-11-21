@@ -48,10 +48,10 @@ public class Teleop extends LinearOpMode {
                 BackLeftVal /= wheelPowers[3];
                 BackRightVal /= wheelPowers[3];
             }
-                robot.frontLeft.setPower(FrontLeftVal * 1);
-                robot.frontRight.setPower(FrontRightVal * 1);
-                robot.backLeft.setPower(BackLeftVal * 1);
-                robot.backRight.setPower(BackRightVal * 1);
+                robot.frontLeft.setPower(FrontLeftVal * 0.6);
+                robot.frontRight.setPower(FrontRightVal * 0.6);
+                robot.backLeft.setPower(BackLeftVal * 0.6);
+                robot.backRight.setPower(BackRightVal * 0.6);
 
 
             idle();
