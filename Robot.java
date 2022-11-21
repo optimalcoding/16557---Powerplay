@@ -44,6 +44,9 @@ public class Robot {
     public DcMotor backRight;
     public DcMotor frontLeft;
     public DcMotor backLeft;
+    public DcMotor lift;
+    public Servo lift2;
+    public Servo claw;
 
     /* local OpMode members. */
     HardwareMap hwMap = null;
