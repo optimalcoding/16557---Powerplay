@@ -17,6 +17,9 @@ Teleop extends LinearOpMode {
 
     int robotCycle = 0;
 
+    Servo claw;
+    double setPosition = 0.0;
+
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -25,6 +28,10 @@ Teleop extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.addData("Status", "Runtime " + robot.runtime.toString());
         telemetry.update();
+
+
+
+
 
         robot.init(hardwareMap);
 
@@ -56,24 +63,73 @@ Teleop extends LinearOpMode {
             robot.backRight.setPower(BackRightVal * 0.6);
             robot.lift.setPower(gamepad2.left_stick_y);
 
+            // run until the end of the match (driver presses STOP)
+            double tgtPower = 0;
+            while (opModeIsActive()) {
+                tgtPower = -this.gamepad2.left_stick_y;
+                claw.setPosition(tgtPower);
+                // check to see if we need to move the servo.
+                if(gamepad2.a) {
+                    // move to 0 degrees.
+                    claw.setPosition(0);
+                } else if (gamepad2.b || gamepad2.b) {
+                    // move to 90 degrees.
+                    claw.setPosition(0.5);
+                } else if (gamepad2.b) {
+                    // move to 180 degrees.
+                //    claw.setPosition(1);
+                }
+               // telemetry.addData("Servo Position", claw.getPosition());
+                // telemetry.addData("Target Power", tgtPower);
+               // telemetry.addData("Motor Power", claw.getPower());
+               // telemetry.addData("Status", "Running");
+               // telemetry.update();
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             //position 0 is closed//    //reg servo position values either 0.0 - 1.0 90 degree is 0.5 ends of 180 is 0.0 and 0.1
             // when trigger isnt pressed value is 0.0 if pressed value increases maximum 1.0 which is why motor pwr exists triggers output 0.0 and 1.0 halfway = 0.5
-            if (gamepad2.a) {
+         //   if (gamepad2.a) {
                  robot.claw.setPosition(1); // pos 1 is open also need to slow down the power
-             }
+          //   }
 
-              else if (gamepad2.b) {
+           //   else if (gamepad2.b) {
                 robot.claw.setPosition(0); //pos 0 is closed
-              }
+          //    }
 
             robot.lift2.setPosition(gamepad2.right_stick_x);
-              if (currentGamepad2.x && !previousGamepad2.x) {
-                 lift2.setPosition(lift2.getPosition() + 0.5);
-              }
+         //   if (currentGamepad2.x && !previousGamepad2.x) {
+           //     lift2.setPosition(lift2.getPosition() + 0.5);
+            // }
 
-            if (!currentGamepad2.y && previousGamepad2.y) {
-                lift2.setPosition(lift2.getPosition() - 0.5);
-            }
+           // if (!currentGamepad2.y && previousGamepad2.y) {
+             //   lift2.setPosition(lift2.getPosition() - 0.5);
+           // }
+
+
+
+
+
+
 
 
 
@@ -82,6 +138,9 @@ Teleop extends LinearOpMode {
         }
     }
 }
+
+
+
 
 
 
