@@ -1,0 +1,96 @@
+package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.openftc.apriltag.AprilTagDetection;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+
+import java.util.ArrayList;
+
+@Autonomous(name = "EncoderTest")
+public class auto extends LinearOpMode {
+
+    Robot robot = new Robot();
+
+    @Override
+    public void runOpMode() throws InterruptedException {
+
+        robot.init(hardwareMap);
+
+        robot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
+        // We set the viewport policy to optimized view so the preview doesn't appear 90 deg
+        // out when the RC activity is in portrait. We do our actual image processing assuming
+        // landscape orientation, though.
+
+        double position = 0;
+
+        waitForStart();
+
+        while (opModeIsActive()) {
+
+            straight(0.4, 1100);
+
+            stop();
+        }
+    }
+
+    void straight(double power, int milliseconds) {
+        robot.frontLeft.setPower(-power);
+        robot.backLeft.setPower(-power);
+        robot.frontRight.setPower(-power);
+        robot.backRight.setPower(-power);
+        sleep(milliseconds);
+        robot.frontLeft.setPower(0);
+        robot.backLeft.setPower(0);
+        robot.frontRight.setPower(0);
+        robot.backRight.setPower(0);
+    }
+
+    void strafeLeft(double power, int milliseconds) {
+        robot.frontRight.setPower(-power);
+        robot.frontLeft.setPower(power * 0.5);
+        robot.backRight.setPower(power);
+        robot.backLeft.setPower(-power);
+        sleep(milliseconds);
+        robot.frontLeft.setPower(0);
+        robot.backLeft.setPower(0);
+        robot.frontRight.setPower(0);
+        robot.backRight.setPower(0);
+    }
+
+    void strafeRight(double power, int milliseconds) {
+        robot.frontRight.setPower(power);
+        robot.frontLeft.setPower(-power);
+        robot.backRight.setPower(-power);
+        robot.backLeft.setPower(power);
+        sleep(milliseconds);
+        robot.frontLeft.setPower(0);
+        robot.backLeft.setPower(0);
+        robot.frontRight.setPower(0);
+        robot.backRight.setPower(0);
+    }
+
+    void rotate(double power, int milliseconds) { //note: default rotate counter clockwise
+        robot.frontRight.setPower(-power);
+        robot.frontLeft.setPower(power);
+        robot.backRight.setPower(-power);
+        robot.backLeft.setPower(power);
+        sleep(milliseconds);
+        robot.frontLeft.setPower(0);
+        robot.backLeft.setPower(0);
+        robot.frontRight.setPower(0);
+        robot.backRight.setPower(0);
+    }
+
+}
