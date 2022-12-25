@@ -1,6 +1,6 @@
 Camera
 
-/*
+/* 
  * Copyright (c) 2021 OpenFTC Team
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -468,8 +468,16 @@ public class Teleop16557 extends LinearOpMode {
 	strafeLeft(0.5, 2000);
 	straight(0.5, 2000);
 
-        } else if (detectionResult == detection.MIDDLE) {
-            straight(0.5, 4000);
+        } else if (detectionResult == detection.MIDDLE) { 
+            straight(0.05, 2000);
+	    Missing motor code to lift up
+	    rotateRight(0.03, 1500);
+	    straight(0.03, 1000);
+	    Add motor code to raise and drop and determine on field where it goes
+	    straight(-0.03, 1000);
+	    rotateRight(-0.03, 1500);
+	    
+	    
 
         } else if (detectionResult == detection.RIGHT) {
 		strafeRight(0.5, 2000);
@@ -509,7 +517,7 @@ public class Teleop16557 extends LinearOpMode {
         robot.backRight.setPower(0);
     }
 
-    void rotate(double power, int milliseconds) { //note: default rotate clockwise
+    void rotateRight(double power, int milliseconds) { //note: default rotate clockwise
         robot.frontRight.setPower(-power);
         robot.frontLeft.setPower(power);
         robot.backRight.setPower(-power);
@@ -519,19 +527,8 @@ public class Teleop16557 extends LinearOpMode {
         robot.backLeft.setPower(0);
         robot.frontRight.setPower(0);
         robot.backRight.setPower(0);
+	}
 
-
-void strafeRight(double power, int milliseconds) {
-        robot.frontRight.setPower(power);
-        robot.frontLeft.setPower-(power);
-        robot.backRight.setPower-(power);
-        robot.backLeft.setPower(power);
-        sleep(milliseconds);
-        robot.frontLeft.setPower(0);
-        robot.backLeft.setPower(0);
-        robot.frontRight.setPower(0);
-        robot.backRight.setPower(0);
-}
     }
 }
 
