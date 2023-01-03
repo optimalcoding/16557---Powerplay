@@ -269,3 +269,274 @@ public class Autodrive {
 
     }
 }
+package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.openftc.apriltag.AprilTagDetection;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.core.Point;
+import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
+import org.opencv.imgproc.Imgproc;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.openftc.easyopencv.OpenCvPipeline;
+import org.openftc.apriltag.AprilTagDetection;
+
+import java.util.ArrayList;
+
+public class Autodrive {
+
+
+    @Autonomous(name = "16557Teleop")
+    public static class Teleop16557 extends LinearOpMode {
+        OpenCvCamera camera;
+        autonomous.AprilTagDetectionPipeline pipeline;
+        Robot robot = new Robot();
+
+        // Lens intrinsics
+        // UNITS ARE PIXELS
+        // NOTE: this calibration is for the C270 webcam at 1280x720.
+        double fx = 1430;
+        double fy = 1430;
+        double cx = 480;
+        double cy = 620;
+
+        // UNITS ARE METERS
+        double tagsize = 0.166;
+
+        int numFramesWithoutDetection = 0;
+
+        final float DECIMATION_HIGH = 3;
+        final float DECIMATION_LOW = 2;
+        final float THRESHOLD_HIGH_DECIMATION_RANGE_METERS = 1.0f;
+        final int THRESHOLD_NUM_FRAMES_NO_DETECTION_BEFORE_LOW_DECIMATION = 4;
+
+        public enum detection {
+            LEFT,
+            MIDDLE,
+            RIGHT,
+            DETECTION_FAILED
+        }
+
+
+        @Override
+        public void runOpMode() throws InterruptedException {
+
+            robot.init(hardwareMap);
+
+            robot.frontLeft.setDirection(DcMotor.Direction.FORWARD);
+            robot.backLeft.setDirection(DcMotor.Direction.FORWARD);
+            robot.frontRight.setDirection(DcMotor.Direction.REVERSE);
+            robot.backRight.setDirection(DcMotor.Direction.REVERSE);
+
+            robot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            //initializes the camera and sets it up for which camera will be used.
+            WebcamName webcamName = hardwareMap.get(WebcamName.class, "camera");
+            camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName);
+            pipeline = new autonomous.AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
+            camera.setPipeline(pipeline);
+
+            // We set the viewport policy to optimized view so the preview doesn't appear 90 deg
+            // out when the RC activity is in portrait. We do our actual image processing assuming
+            // landscape orientation, though.
+            camera.setViewportRenderingPolicy(OpenCvCamera.ViewportRenderingPolicy.OPTIMIZE_VIEW);
+
+            camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
+
+                @Override
+                public void onOpened() {
+                    camera.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
+                }
+
+                @Override
+                public void onError(int errorCode) {
+                }
+            });
+
+            detection detectionResult = detection.DETECTION_FAILED;
+
+            while (!isStarted()) {
+                ArrayList<AprilTagDetection> detections = pipeline.getDetectionsUpdate();
+
+                // If there's been a new frame...
+                if (detections != null) {
+                    telemetry.addData("FPS", camera.getFps());
+                    telemetry.addData("Overhead ms", camera.getOverheadTimeMs());
+                    telemetry.addData("Pipeline ms", camera.getPipelineTimeMs());
+
+                    // If we don't see any tags
+                    if (detections.size() == 0) {
+                        numFramesWithoutDetection++;
+
+                        // If we haven't seen a tag for a few frames, lower the decimation
+                        // so we can hopefully pick one up if we're e.g. far back
+                        if (numFramesWithoutDetection >= THRESHOLD_NUM_FRAMES_NO_DETECTION_BEFORE_LOW_DECIMATION) {
+                            pipeline.setDecimation(DECIMATION_LOW);
+                        }
+                    }
+                    // We do see tags!
+                    else {
+                        numFramesWithoutDetection = 0;
+
+                        // If the target is within 1 meter, turn on high decimation to
+                        // increase the frame rate
+                        if (detections.get(0).pose.z < THRESHOLD_HIGH_DECIMATION_RANGE_METERS) {
+                            pipeline.setDecimation(DECIMATION_HIGH);
+                        }
+
+                        if (detections.get(0).id == 1) {
+                            detectionResult = detection.LEFT;
+                        } else if (detections.get(0).id == 2) {
+                            detectionResult = detection.MIDDLE;
+                        } else if (detections.get(0).id == 3) {
+                            detectionResult = detection.RIGHT;
+                        }
+
+                        for (AprilTagDetection detection : detections) {
+                            telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
+                        }
+                        if (detectionResult == detection.LEFT) {
+                            telemetry.addLine("Left Side");
+                        } else if (detectionResult == detection.MIDDLE) {
+                            telemetry.addLine("Middle Side");
+                        } else if (detectionResult == detection.RIGHT) {
+                            telemetry.addLine("Right Side");
+                        }
+                    }
+
+                    telemetry.update();
+                }
+            }
+
+            waitForStart();
+
+            if (isStopRequested()) return;
+
+            if (detectionResult == detection.LEFT) {
+                grab(1, 500);
+                arm(-1, 200);
+                sleep(500);
+                strafeLeft(0.5, 1060);
+                sleep(500);
+                straight(0.5, 930);
+
+            } else if (detectionResult == detection.MIDDLE) { //go forward to park and then turn to right low junc raise arm go forward drop and park again if we need to go left reverse the turn everything else should stay the same unless we go for the closet low junction at start 
+                grab(1, 500);
+                arm(-1, 200);
+                sleep(500);
+                straight(0.5, 1000);
+                rotate(0.03,500);
+                arm(1, 300);
+                straight(0.5,500);
+                grab(0,500);
+                straight(-0.5,500);
+                rotate(-0.03, 500);
+
+
+                straight(0.05, 2000);
+              //  Missing motor code to lift up
+              //  rotateRight(0.03, 1500);
+                straight(0.03, 1000);
+               // Add motor code to raise and drop and determine on field where it goes
+                straight(-0.03, 1000);
+              //  rotateRight(-0.03, 1500);
+
+            } else if (detectionResult == detection.RIGHT) {
+                grab(1, 500);
+                arm(-1, 200);
+                sleep(500);
+                strafeRight(0.5, 1060);
+                sleep(500);
+                straight(0.5, 930);
+
+
+            } else { //if not detected at all, goes right
+
+            }
+
+            //if(isStopRequested()) return;
+
+        }
+
+        void straight(double power, int milliseconds) {
+            robot.frontLeft.setPower(power);
+            robot.backLeft.setPower(power);
+            robot.frontRight.setPower(power);
+            robot.backRight.setPower(power);
+            sleep(milliseconds);
+            robot.frontLeft.setPower(0);
+            robot.backLeft.setPower(0);
+            robot.frontRight.setPower(0);
+            robot.backRight.setPower(0);
+        }
+
+        void strafeRight(double power, int milliseconds) {
+            robot.frontRight.setPower(-power);
+            robot.frontLeft.setPower(power);
+            robot.backRight.setPower(power);
+            robot.backLeft.setPower(-power);
+            sleep(milliseconds);
+            robot.frontLeft.setPower(0);
+            robot.backLeft.setPower(0);
+            robot.frontRight.setPower(0);
+            robot.backRight.setPower(0);
+        }
+
+        void strafeLeft(double power, int milliseconds) {
+            robot.frontRight.setPower(power);
+            robot.frontLeft.setPower(-power);
+            robot.backRight.setPower(-power);
+            robot.backLeft.setPower(power);
+            sleep(milliseconds);
+            robot.frontLeft.setPower(0);
+            robot.backLeft.setPower(0);
+            robot.frontRight.setPower(0);
+            robot.backRight.setPower(0);
+        }
+
+
+            void rotate(double power, int milliseconds) { //note: default rotate clockwise
+                robot.frontRight.setPower(-power);
+                robot.frontLeft.setPower(power);
+                robot.backRight.setPower(-power);
+                robot.backLeft.setPower(power);
+                sleep(milliseconds);
+                robot.frontLeft.setPower(0);
+                robot.backLeft.setPower(0);
+                robot.frontRight.setPower(0);
+                robot.backRight.setPower(0);
+            }
+
+
+            void arm(double power, int milliseconds) {
+                robot.lift.setPower(power);
+                sleep(milliseconds);
+                robot.lift.setPower(0);
+            }
+
+            void grab(double position, int milliseconds) {
+                robot.claw.setPosition(position);
+                sleep(milliseconds);
+            }
+
+
+
+
+    }
+}
