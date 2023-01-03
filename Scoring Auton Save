@@ -171,12 +171,12 @@ public class Autodrive {
                 sleep(500);
                 straight(0.5, 1000);
                 rotate(0.03,500);
+                arm(1, 300);
                 straight(0.5,500);
-                arm(1,300);
                 grab(0,500);
                 straight(-0.5,500);
                 rotate(-0.03, 500);
-                
+
 
                 straight(0.05, 2000);
               //  Missing motor code to lift up
