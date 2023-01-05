@@ -165,7 +165,7 @@ public class Autodrive {
                 sleep(500);
                 straight(0.5, 930);
 
-            } else if (detectionResult == detection.MIDDLE) { //go forward to park and then turn to left low junc raise arm go forward drop and park again if we need to go right reverse the turn everything else should stay the same unless we go for the closet low junction at start
+            } else if (detectionResult == detection.MIDDLE) { //When on right side, strafe left to low junc, raise arm, go forward, open claw, back up, strafe right back to start, go forward to park
                 grab(1, 500);
                 arm(-1, 200);
                 sleep(500);
