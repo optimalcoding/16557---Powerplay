@@ -169,27 +169,22 @@ public class Autodrive {
                 grab(1, 500);
                 arm(-1, 200);
                 sleep(500);
+                strafeLeft(0.5, 600);
+                sleep(250);
+                arm(-1, 2000);
+                sleep(250);
+                straight(0.5, 500);
+                sleep(500);
+                grab(0, 500);
+                sleep(250);
+                straight(-0.5, 500);
+                sleep(250);
+                strafeRight(0.5, 600);
+                sleep(250);
                 straight(0.5, 1000);
-                sleep(500);
-                rotate(-0.03,500);
-                sleep(500);
-                arm(1, 300);
-                straight(0.5,500);
-                sleep(500);
-                grab(0,500);
-                straight(-0.5,500);
-                sleep(500);
+                
 
-                rotate(0.03, 500);
-
-
-                straight(0.05, 2000);
-              //  Missing motor code to lift up
-              //  rotateRight(0.03, 1500);
-                straight(0.03, 1000);
-               // Add motor code to raise and drop and determine on field where it goes
-                straight(-0.03, 1000);
-              //  rotateRight(-0.03, 1500);
+               
 
             } else if (detectionResult == detection.RIGHT) {
                 grab(1, 500);
