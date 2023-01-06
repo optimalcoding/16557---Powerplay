@@ -166,22 +166,22 @@ public class Autodrive {
                 straight(0.5, 930);
 
             } else if (detectionResult == detection.MIDDLE) { //When on right side, strafe left to low junc, raise arm, go forward, open claw, back up, strafe right back to start, go forward to park
-                grab(1, 500);
+                  grab(1, 500);
                 arm(-1, 200);
                 sleep(500);
                 strafeLeft(0.5, 600);
-                sleep(250);
-                arm(-1, 2000);
-                sleep(250);
-                straight(0.5, 500);
                 sleep(500);
+                arm(-1,2250);
+                straight(0.25, 800);
+                sleep(350);
                 grab(0, 500);
+                sleep(1000);
+                straight(-0.25, 250);
                 sleep(250);
-                straight(-0.5, 500);
-                sleep(250);
-                strafeRight(0.5, 600);
-                sleep(250);
-                straight(0.5, 1000);
+                strafeRight(0.5,600);
+                sleep(500);
+                straight(0.5,1000);
+
                 
 
                
