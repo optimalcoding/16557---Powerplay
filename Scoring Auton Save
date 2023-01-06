@@ -161,19 +161,29 @@ public class Autodrive {
                 grab(1, 500);
                 arm(-1, 200);
                 sleep(500);
-                strafeLeft(0.5, 1060);
+                strafeLeft(0.5, 700);
                 sleep(500);
-                straight(0.5, 930);
+                arm(-1,2100);
+                straight(0.25, 600);
+                sleep(1000);
+                grab(0, 500);
+                sleep(1000);
+                straight(-0.25, 250);
+                sleep(250);
+                strafeLeft(0.5,700);
+                sleep(500);
+                straight(0.5,930);
 
-            } else if (detectionResult == detection.MIDDLE) { //When on right side, strafe left to low junc, raise arm, go forward, open claw, back up, strafe right back to start, go forward to park
-                  grab(1, 500);
+
+            } else if (detectionResult == detection.MIDDLE) { //starting right side
+                grab(1, 500);
                 arm(-1, 200);
                 sleep(500);
-                strafeLeft(0.5, 600);
+                strafeLeft(0.5, 700);
                 sleep(500);
-                arm(-1,2250);
-                straight(0.25, 800);
-                sleep(350);
+                arm(-1,2000);
+                straight(0.25, 600);
+                sleep(1000);
                 grab(0, 500);
                 sleep(1000);
                 straight(-0.25, 250);
@@ -182,17 +192,64 @@ public class Autodrive {
                 sleep(500);
                 straight(0.5,1000);
 
-                
+                //starting left side
+               // grab(1, 500);
+               // arm(-1, 200);
+              //  sleep(500);
+               // strafeRight(0.5, 700);
+               // sleep(500);
+              //  arm(-1,2000);
+               // straight(0.25, 600);
+               // sleep(1000);
+              //  grab(0, 500);
+              //  sleep(1000);
+              //  straight(-0.25, 250);
+               // sleep(250);
+               // strafeLeft(0.5,600);
+              //  sleep(500);
+               // straight(0.5,1000);
 
-               
 
-            } else if (detectionResult == detection.RIGHT) {
+
+
+
+
+
+
+            } else if (detectionResult == detection.RIGHT) { //starting right side
                 grab(1, 500);
                 arm(-1, 200);
                 sleep(500);
-                strafeRight(0.5, 1060);
+                strafeLeft(0.5, 700);
                 sleep(500);
-                straight(0.5, 930);
+                arm(-1,2100);
+                straight(0.25, 600);
+                sleep(1000);
+                grab(0, 500);
+                sleep(1000);
+                straight(-0.25, 250);
+                sleep(250);
+                strafeRight(0.5,1800);
+                sleep(500);
+                straight(0.5,930);
+
+                //starting left side
+               // grab(1, 500);
+               // arm(-1, 200);
+               // sleep(500);
+               // strafeRight(0.5, 700);
+               // sleep(500);
+               // arm(-1,2100);
+               // straight(0.25, 600);
+              //  sleep(1000);
+              //  grab(0, 500);
+               // sleep(1000);
+              //  straight(-0.25, 250);
+              //  sleep(250);
+              //  strafeLeft(0.5,1800);
+              //  sleep(500);
+               // straight(0.5,930);
+
 
 
             } else { //if not detected at all, goes right
@@ -269,4 +326,3 @@ public class Autodrive {
 
     }
 }
-
