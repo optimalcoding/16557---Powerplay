@@ -157,11 +157,28 @@ public class Autodrive {
 
             if (isStopRequested()) return;
 
-            if (detectionResult == detection.LEFT) {
+            if (detectionResult == detection.LEFT) { //starting right side
                 grab(1, 500);
                 arm(-1, 200);
                 sleep(500);
                 strafeLeft(0.5, 700);
+                sleep(500);
+                arm(-1,2100);
+                straight(0.25, 600);
+                sleep(1000);
+                grab(0, 500);
+                sleep(1000);
+                straight(-0.25, 250);
+                sleep(250);
+                strafeLeft(0.5,700);
+                sleep(500);
+                straight(0.5,930);
+                
+                //starting left side
+                grab(1, 500);
+                arm(-1, 200);
+                sleep(500);
+                strafeRight(0.5, 700);
                 sleep(500);
                 arm(-1,2100);
                 straight(0.25, 600);
