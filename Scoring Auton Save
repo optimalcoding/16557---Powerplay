@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode; //make sure to angle the bot a small bit during autonomous otherwise it will drift and miss the cone and parking
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -164,7 +164,7 @@ public class Autodrive {
                 sleep(500);
                 strafeLeft(0.5, 700);
                 sleep(500);
-                arm(-1,1800);
+                arm(-1,1900);
                 straight(0.25, 600);
                 sleep(1000);
                 grab(0, 500);
@@ -180,9 +180,9 @@ public class Autodrive {
                 grab(1, 500);
                 arm(-1, 200);
                 sleep(500);
-                strafeLeft(0.5, 600);
+                strafeLeft(0.5, 700);
                 sleep(500);
-                arm(-1,1800);
+                arm(-1,1900);
                 sleep(500);
                 straight(0.25, 600);
                 sleep(1000);
@@ -190,30 +190,9 @@ public class Autodrive {
                 sleep(1000);
                 straight(-0.25, 250);
                 sleep(250);
-                strafeRight(0.5,600);
+                strafeRight(0.5,650);
                 sleep(500);
                 straight(0.5,1000);
-
-                //starting left side
-               // grab(1, 500);
-               // arm(-1, 200);
-              //  sleep(500);
-               // strafeRight(0.5, 700);
-               // sleep(500);
-              //  arm(-1,2000);
-               // straight(0.25, 600);
-               // sleep(1000);
-              //  grab(0, 500);
-              //  sleep(1000);
-              //  straight(-0.25, 250);
-               // sleep(250);
-               // strafeLeft(0.5,600);
-              //  sleep(500);
-               // straight(0.5,1000);
-
-
-
-
 
 
 
@@ -224,7 +203,7 @@ public class Autodrive {
                 sleep(500);
                 strafeLeft(0.5, 700);
                 sleep(500);
-                arm(-1,1800);
+                arm(-1,1850);
                 straight(0.25, 600);
                 sleep(1000);
                 grab(0, 500);
@@ -235,22 +214,7 @@ public class Autodrive {
                 sleep(500);
                 straight(0.5,930);
 
-                //starting left side
-               // grab(1, 500);
-               // arm(-1, 200);
-               // sleep(500);
-               // strafeRight(0.5, 700);
-               // sleep(500);
-               // arm(-1,2100);
-               // straight(0.25, 600);
-              //  sleep(1000);
-              //  grab(0, 500);
-               // sleep(1000);
-              //  straight(-0.25, 250);
-              //  sleep(250);
-              //  strafeLeft(0.5,1800);
-              //  sleep(500);
-               // straight(0.5,930);
+
 
 
 
