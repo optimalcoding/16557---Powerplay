@@ -164,14 +164,19 @@ public class Autodrive {
                 sleep(500);
                 strafeLeft(0.5, 700);
                 sleep(500);
-                arm(-1,1900);
-                straight(0.25, 600);
+                arm(-1,1725);
+                sleep(500);
+                straight(0.25, 530);
                 sleep(1000);
-                grab(0, 500);
-                sleep(1000);
-                straight(-0.25, 250);
+                grab(0, 300);
                 sleep(250);
-                strafeLeft(0.5,500);
+                grab(1, 300);
+                sleep(500);
+                arm(1,1500);
+                sleep(500);
+                straight(-0.25, 280);
+                sleep(250);
+                strafeLeft(0.5,600);
                 sleep(500);
                 straight(0.5,930);
 
@@ -180,20 +185,23 @@ public class Autodrive {
                 grab(1, 500);
                 arm(-1, 200);
                 sleep(500);
-                strafeLeft(0.5, 700);
+                strafeLeft(0.5, 750);
                 sleep(500);
-                arm(-1,1900);
+                arm(-1,1725);
                 sleep(500);
                 straight(0.25, 600);
                 sleep(1000);
                 grab(0, 200);
                 sleep(1000);
+                grab(1, 300);
+                sleep(500);
+                arm(1,1500);
+                sleep(500);
                 straight(-0.25, 250);
                 sleep(250);
                 strafeRight(0.5,650);
                 sleep(500);
                 straight(0.5,1000);
-
 
 
 
@@ -203,19 +211,23 @@ public class Autodrive {
                 sleep(500);
                 strafeLeft(0.5, 700);
                 sleep(500);
-                arm(-1,1850);
-                straight(0.25, 600);
+                arm(-1,1725);
+                sleep(500);
+                straight(0.25, 650);
                 sleep(1000);
-                grab(0, 500);
+                grab(0, 300);
                 sleep(1000);
+                grab(1, 300);
+                sleep(500);
+                arm(1,1500);
+                sleep(500);
                 straight(-0.25, 250);
                 sleep(250);
                 strafeRight(0.5,1800);
                 sleep(500);
                 straight(0.5,930);
 
-
-
+//arm motor spin time depends on rack and pinion resistance 1725 good enough and the inertia falls the arm back into guides
 
 
             } else { //if not detected at all, goes right
