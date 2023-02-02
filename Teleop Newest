@@ -56,10 +56,10 @@ Teleop extends LinearOpMode {
                 BackRightVal /= wheelPowers[3];
                 BackLeftVal /= wheelPowers[3];
             }
-            robot.frontLeft.setPower(FrontLeftVal * 0.55);
-            robot.frontRight.setPower(FrontRightVal * 0.55);
-            robot.backLeft.setPower(BackLeftVal * 0.55);
-            robot.backRight.setPower(BackRightVal * 0.55);
+            robot.frontLeft.setPower(FrontLeftVal * 0.57);
+            robot.frontRight.setPower(FrontRightVal * 0.57);
+            robot.backLeft.setPower(BackLeftVal * 0.57);
+            robot.backRight.setPower(BackRightVal * 0.57);
             robot.lift.setPower(gamepad2.left_stick_y);
 
 
