@@ -1,5 +1,5 @@
 kage org.firstinspires.ftc.teamcode;
-                                                                    refer to teleop3 for latest code change
+                                                                    refer to teleop3 for latest code change and also this is an older version
 import static com.qualcomm.robotcore.hardware.Servo.*;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
