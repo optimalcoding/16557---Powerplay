@@ -166,7 +166,7 @@ public class Autodrive {
                 sleep(500);
                 arm(-1,1700);
                 sleep(500);
-                straight(0.25, 530);
+                straight(0.25, 600);
                 sleep(1000);
                 grab(0, 300);
                 sleep(500);
@@ -216,7 +216,7 @@ public class Autodrive {
                 straight(0.5,930);
 
 //arm motor spin time depends on rack and pinion resistance 1700 good enough and the inertia falls the arm back into guides
-              
+
 
 
             } else { //if not detected at all, goes right
