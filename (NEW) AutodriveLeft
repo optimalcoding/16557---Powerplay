@@ -117,7 +117,7 @@ public class AutodriveLeft extends LinearOpMode {
 
         TrajectorySequence trajec1 = drive.trajectorySequenceBuilder(myPose)
                 .forward(2)
-                .strafeRight(14)
+                .strafeLeft(16)
                 .addTemporalMarker(0, () -> {
                     robot.lift.setTargetPosition(200);
                 })
@@ -135,22 +135,22 @@ public class AutodriveLeft extends LinearOpMode {
                 .addTemporalMarker(0.5,()->{
                     robot.lift.setTargetPosition(200);
                 })
-                .strafeLeft(16)
+                .strafeRight(16)
                 .waitSeconds(0.6)
-                .forward(52)
+                .forward(54)
                 .back(3)
 
 
                 .build();
 
         TrajectorySequence trajec3 = drive.trajectorySequenceBuilder(trajec2.end())
-                .turn(Math.toRadians(90))
+                .turn(Math.toRadians(-90))
                 .waitSeconds(0.3)
                 .forward(10)
                 .waitSeconds(0.1)
-                .forward(14)
+                .forward(13)
                 .addTemporalMarker(1, ()->{
-                    robot.lift.setTargetPosition(1600);
+                    robot.lift.setTargetPosition(200); // needs to drop down to 2nd cone change if necessary 5 norm at 1610
                 })
                 .build();
 
@@ -164,17 +164,17 @@ public class AutodriveLeft extends LinearOpMode {
 
                 .back(25)
                 .waitSeconds(0.2)
-                .strafeLeft(14)
+                .strafeRight(15)
                 .addTemporalMarker(3, ()->{
                     robot.lift.setTargetPosition(4700);
                 })
-                .forward(3)
+                .forward(4)
                 .build();
 
         TrajectorySequence trajec5 = drive.trajectorySequenceBuilder(trajec4.end())
-                .back(2)
-                .strafeRight(14)
-                .forward(21)
+                .back(3)
+                .strafeLeft(16)
+                .back(24)
                 .addTemporalMarker(1.2,()->{
                     robot.lift.setTargetPosition(1350);
                 })
@@ -182,20 +182,20 @@ public class AutodriveLeft extends LinearOpMode {
 
         TrajectorySequence trajec6 = drive.trajectorySequenceBuilder(trajec4.end())
                 .back(2)
-                .strafeRight(13)
+                .strafeLeft(15)
                 .addTemporalMarker(1.2,()->{
                     robot.lift.setTargetPosition(1350);
                 })
-                .back(3)
+                .back(2)
                 .build();
 
         TrajectorySequence trajec7 = drive.trajectorySequenceBuilder(trajec4.end())
                 .back(2)
-                .strafeRight(13)
+                .strafeRight(15)
                 .addTemporalMarker(1.2,()->{
                     robot.lift.setTargetPosition(1350);
                 })
-                .back(21)
+                .forward(21)
                 .build();
 
 
