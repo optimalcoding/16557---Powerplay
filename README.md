@@ -1,3 +1,3 @@
-Team 16557 Honey Kilo Ohms Code for FTC PowerPlay
+# Full Android Studio Code File for FTC Powerplay
 
-All code is Team 16557 IP 
+Contains autonomous and driver control code and experimental .java files 
